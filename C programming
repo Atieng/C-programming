@@ -1,0 +1,2 @@
+Malloc - allocates memory from where it stats
+ while calloc allocates memory by initilaizing 0
