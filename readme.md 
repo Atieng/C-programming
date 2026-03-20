@@ -1,0 +1,219 @@
+# Memory Management Assignment (C Programming)
+
+## Student Details
+
+**Name:** Ivy Atieng
+**Course:** Computer Science
+**Unit:** Systems Programming / Operating Systems
+
+---
+
+## Overview
+
+This assignment explores **dynamic memory management in C** using standard library functions (`malloc`, `calloc`, `realloc`) and a custom-built memory manager using `mmap()`.
+
+The goal is to understand how memory is allocated, managed, and optimized at a low level.
+
+---
+
+## Objectives
+
+* To understand dynamic memory allocation in C
+* To compare different allocation methods (`malloc`, `calloc`, `realloc`)
+* To compute statistical values using dynamically allocated memory
+* To design and implement a **custom memory manager**
+
+---
+
+## Question Breakdown
+
+---
+
+### Question 1: Dynamic Memory Allocation using malloc()
+
+A program was developed to:
+
+* Allocate memory dynamically for `k` integers
+* Accept user input
+* Store and display values
+
+**Output Screenshot:**
+![Output Screenshot](iMAGES/2026-03-20_13-00.png)
+
+---
+
+### Question 2: Standard Deviation using malloc()
+
+This program:
+
+* Accepts `n` integers from the user
+* Dynamically allocates memory for:
+
+  * Array of integers
+  * Sum
+  * Standard deviation
+* Computes:
+
+  * Mean
+  * Standard deviation
+
+ **Output Screenshot:**
+![Q2 Output](q2.png)
+
+---
+
+### Question 4: Using calloc()
+
+This program performs the same operations as Question 2 but uses `calloc()`.
+
+#### Key Difference:
+
+* `malloc()` → Allocates memory without initialization
+* `calloc()` → Allocates memory and initializes all values to zero
+
+#### 📊 Comparison:
+
+| Feature        | malloc()                       | calloc()                 |
+| -------------- | ------------------------------ | ------------------------ |
+| Initialization | Not initialized                | Initialized to 0         |
+| Speed          | Faster                         | Slightly slower          |
+| Usage          | Manual initialization required | Safer for default values |
+
+**Output Screenshot:**
+![Q4 Output](q4.png)
+
+---
+
+### Question 5: Memory Reallocation using realloc()
+
+This program demonstrates:
+
+* Expanding allocated memory dynamically
+* Preserving existing data
+* Adding new elements after resizing
+
+**Output Screenshot:**
+![Q5 Output](q5.png)
+
+---
+
+## Question 6: Custom Memory Manager (4KB Allocator)
+
+### Description
+
+A custom memory manager was implemented to simulate how `malloc()` and `free()` work internally.
+
+It manages a fixed **4KB memory page** obtained using `mmap()`.
+
+---
+
+### Features
+
+* Allocation and deallocation of memory blocks
+* Memory alignment (multiples of 8 bytes)
+* Block splitting for efficient usage
+* Block merging (coalescing) to reduce fragmentation
+* External metadata management (no headers inside memory page)
+* Error handling:
+
+  * Invalid pointer detection
+  * Double-free detection
+
+---
+
+### Design Approach
+
+* A **linked list** is used to track memory blocks
+* Each block stores:
+
+  * Offset within memory
+  * Size
+  * Allocation status
+
+---
+
+### Memory Allocation Process
+
+1. Search for a free block (First-Fit strategy)
+2. If block is larger than required → split
+3. Mark block as allocated
+
+---
+
+### Memory Deallocation Process
+
+1. Mark block as free
+2. Merge adjacent free blocks
+
+---
+
+### Example Memory Layout
+
+```
+[Offset: 0   | Size: 64  | USED]
+[Offset: 64  | Size: 128 | USED]
+[Offset: 192 | Size: 3904| FREE]
+```
+
+📸 **Output Screenshot:**
+![Memory Manager Output](q6.png)
+
+---
+
+## 🛠️ Compilation & Execution
+
+To compile and run the programs:
+
+```bash
+gcc file_name.c -o output
+./output
+```
+
+For the memory manager:
+
+```bash
+gcc test_alloc.c alloc.c -o test
+./test
+```
+
+---
+
+## Challenges Faced
+
+* Managing memory without using built-in allocation functions
+* Preventing fragmentation through splitting and merging
+* Ensuring metadata is stored outside the memory page
+* Handling edge cases such as invalid pointers and double-free
+
+---
+
+##  Key Learnings
+
+* Understanding how memory allocation works internally
+* Importance of efficient memory usage
+* Differences between `malloc`, `calloc`, and `realloc`
+* Practical implementation of memory management techniques
+
+---
+
+##  Possible Improvements
+
+* Implement Best-Fit allocation strategy
+* Use a doubly linked list for faster merging
+* Add memory usage statistics
+* Extend to support multiple memory pages
+
+---
+ 
+
+## Conclusion
+
+This assignment provided a comprehensive understanding of **dynamic memory management in C**, both using built-in functions and through implementing a custom allocator.
+
+It demonstrates how efficient memory handling is critical in system-level programming.
+
+---
+
+## Author
+
+**Ivy Atieng**
